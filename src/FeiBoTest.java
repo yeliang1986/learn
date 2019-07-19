@@ -1,10 +1,30 @@
 
 import java.util.LinkedList;
 
+/**
+ * 问题：
+ *  F(n) = F(n-1) + F(n-2), where F1 =1, F2 = 2
+ *  F1 =1
+ *  F2 =1
+ *  F3 =2
+ *  F4 =3
+ *  F5 =5
+ *  F6 =8
+ *  F7 =13
+ *  F8 =21
+ *  F9 =34
+ *  F10=55
+ *  F11=89
+ *  F12=144
+ *  可见index=12的F12是第一个包含3个数字的Fn，那么第一个包含1000个数字的Fn的index是多少？
+ */
 public class FeiBoTest {
 
     public static void main(String[] args) {
-        feibo(1000);
+        Long curTime = System.currentTimeMillis();
+        Long index = feibo(1000);
+        System.out.println("time = "+(System.currentTimeMillis()-curTime)+"ms");
+        System.out.println(index);
     }
 
     /**
@@ -12,7 +32,7 @@ public class FeiBoTest {
      * 大数相加时，从后至前遍历两个linkedList,对应元素依次相加，如有进位，则放入前一个元素中。
      * @param wei 位数
      */
-    public static void feibo(int wei){
+    public static Long feibo(int wei){
         //arr1是加数
         LinkedList<String> arr1 = new LinkedList<>();
         arr1.add("1");
@@ -32,8 +52,9 @@ public class FeiBoTest {
             arr1 = arr2;
             arr2 = arr3;
             count ++;
-            System.out.println("curIndex="+curIndex+";count="+count+";arr3="+String.join(",",arr3));
+            //System.out.println("curIndex="+curIndex+";count="+count+";arr3="+String.join(",",arr3));
         }
+        return count;
     }
 
 
@@ -61,8 +82,8 @@ public class FeiBoTest {
             Long temp = a1+b2+borrow;
             borrow = 0L;
             String tempStr  = String.valueOf(temp);
-            //如果相加数大于10位，就生成一个新的元素。并记录进位值
-            if(String.valueOf(temp).length()>10) {
+            //如果相加数大于18位，就生成一个新的元素。并记录进位值
+            if(String.valueOf(temp).length()>18) {
                 borrow = Long.parseLong(tempStr.substring(0,1));
                 r.set(i,tempStr.substring(1));
                 if(i==0){
